@@ -57,24 +57,24 @@ def parse_scalar(text):
     try:
         scalar = float(text.strip())
         return scalar
-    except:
-        raise ValueError('Could not parse scalar from "{}"'.format(text))
+    except Exception as ex:
+        raise ValueError('Could not parse scalar from "{}" due to {}'.format(text, ex))
 
 def parse_vec(text):
     try:
         vec = np.array([float(token) for token in text.strip().split(' ')])
         return vec
-    except:
-        raise ValueError('Could not parse vec from "{}"'.format(text))
+    except Exception as ex:
+        raise ValueError('Could not parse scalar vec "{}" due to {}'.format(text, ex))
 
 def parse_mat(text):
     try:
         lines = text.strip().split('\n')
-        vecs = [parse_vec(line) for line in lines]
+        vecs = [parse_vec(line) for line in lines if line.strip()]
         mat = np.vstack(vecs)
         return mat
-    except:
-        raise ValueError('Could not parse mat3 from "{}"'.format(text))
+    except Exception as ex:
+        raise ValueError('Could not parse mat from "{}" due to {}'.format(text, ex))
 
 def make_unit(vec):
     return vec / np.linalg.norm(vec)
