@@ -57,14 +57,14 @@ def parse_scalar(text):
     try:
         scalar = float(text.strip())
         return scalar
-    except Exception:
+    except:
         raise ValueError('Could not parse scalar from "{}"'.format(text))
 
 def parse_vec(text):
     try:
         vec = np.array([float(token) for token in text.strip().split(' ')])
         return vec
-    except Exception:
+    except:
         raise ValueError('Could not parse vec from "{}"'.format(text))
 
 def parse_mat(text):
@@ -73,7 +73,7 @@ def parse_mat(text):
         vecs = [parse_vec(line) for line in lines]
         mat = np.vstack(vecs)
         return mat
-    except Exception:
+    except:
         raise ValueError('Could not parse mat3 from "{}"'.format(text))
 
 def make_unit(vec):
@@ -187,7 +187,6 @@ for i, color in enumerate(colors, 1):
 # insert meshes
 objects_xml = root.find('Objects')
 nmeshes = len(objects_xml.findall('Mesh'))
-# there may not be any prior meshes in the scene, no ez life template :(
 fmt_str = '{} {} {}'
 for i, triangle_group in enumerate(triangles, 1):
     mesh = ET.SubElement(objects_xml, 'Mesh', attrib={'id':str(nmeshes+i)})
